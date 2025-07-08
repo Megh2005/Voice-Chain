@@ -14,13 +14,6 @@ const Navbar = () => {
                 <span className="text-2xl font-bold text-white">Voice Chain</span>
               </div>
             </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
-                <a href="#features" className="text-gray-300 hover:text-white">Features</a>
-                <a href="#onboard" className="text-gray-300 hover:text-white">Onboard</a>
-                <a href="#join" className="text-gray-300 hover:text-white">Subscribe</a>
-              </div>
-            </div>
             <div className="flex items-center space-x-4">
               <WalletButton />
             </div>

@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { ArrowRight, Shield, Users, Zap, ChevronDown, Play, Check, MessageCircle, Vote, Eye, Lock, Globe, AlertTriangle } from 'lucide-react';
-import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WalletConnectButton from '@/components/WalletConnectButton';
 
@@ -79,7 +78,6 @@ const VoiceChainLanding = () => {
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
-      <Navbar/>
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4 h-screen sm:px-6 lg:px-8 relative">
         <div className="max-w-7xl mx-auto relative z-10">
@@ -213,9 +211,6 @@ const VoiceChainLanding = () => {
           </div>
         </div>
       </section>
-
-      <Footer/>
-
     </div>
   );
 };

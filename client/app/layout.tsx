@@ -4,6 +4,9 @@ import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { WalletContextProvider } from '@/context/Wallet'
 import { Toaster } from '@/components/ui/sonner'
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,7 +29,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <WalletContextProvider>{children}</WalletContextProvider>
+          <WalletContextProvider>
+            <Navbar/>
+            {children}
+            <Footer/>
+            </WalletContextProvider>
           <Toaster position="top-center" />
         </ThemeProvider>
       </body>

@@ -37,7 +37,7 @@ const WalletConnectButton = () => {
                     : "Connect Wallet"}
             </Button>
             {isConnected && userAddress && (
-                <Link href={"/home"}>
+                <Link href={"/upload"}>
                     <Button
                         size="lg"
                         className="bg-red-600 hover:bg-red-700 text-white font-semibold px-10 py-4 w-full"
