@@ -1,113 +1,266 @@
-import Image from 'next/image'
+"use client";
 
-export default function Home() {
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { ArrowRight, Shield, Users, Zap, ChevronDown, Play, Check, MessageCircle, Vote, Eye, Lock, Globe, AlertTriangle } from 'lucide-react';
+import Navbar from '@/components/Navbar';
+
+const VoiceChainLanding = () => {
+  const [email, setEmail] = useState('');
+
+  const features = [
+    {
+      icon: <Shield className="w-8 h-8 text-red-600" />,
+      title: "Immutable Records",
+      description: "Every report is permanently stored on blockchain, ensuring transparency and preventing tampering or deletion."
+    },
+    {
+      icon: <Eye className="w-8 h-8 text-red-600" />,
+      title: "Complete Transparency",
+      description: "All platform activities are publicly verifiable on the blockchain, creating unprecedented accountability."
+    },
+    {
+      icon: <Users className="w-8 h-8 text-red-600" />,
+      title: "Community Verification",
+      description: "Reports are validated through decentralized consensus, ensuring accuracy and preventing false accusations."
+    },
+    {
+      icon: <Lock className="w-8 h-8 text-red-600" />,
+      title: "Privacy Protection",
+      description: "Advanced cryptographic techniques protect whistleblower identities while maintaining report integrity."
+    },
+    {
+      icon: <Globe className="w-8 h-8 text-red-600" />,
+      title: "Global Network",
+      description: "Connect with anti-corruption efforts worldwide through a decentralized, borderless platform."
+    },
+    {
+      icon: <AlertTriangle className="w-8 h-8 text-red-600" />,
+      title: "Real-time Monitoring",
+      description: "Advanced algorithms detect patterns and provide instant alerts about potential corruption activities."
+    }
+  ];
+
+  const testimonials = [
+    {
+      name: "Dr. Sarah Johnson",
+      role: "Ethics Researcher",
+      company: "International Transparency Council",
+      content: "VoiceChain represents a paradigm shift in how we combat corruption. The blockchain foundation ensures evidence integrity while protecting sources.",
+      avatar: "SJ"
+    },
+    {
+      name: "Anonymous Contributor",
+      role: "Government Whistleblower",
+      company: "Protected Identity",
+      content: "For the first time, I can report misconduct without fear of retaliation. The platform's security measures are revolutionary.",
+      avatar: "AC"
+    },
+    {
+      name: "Prof. Michael Chen",
+      role: "Blockchain Specialist",
+      company: "Digital Rights Institute",
+      content: "The technical architecture is impressive. Immutable records combined with privacy protection creates the perfect anti-corruption tool.",
+      avatar: "MC"
+    }
+  ];
+
+  const stats = [
+    { number: "47,312", label: "Reports Documented" },
+    { number: "2.3M", label: "Community Members" },
+    { number: "89", label: "Countries Active" },
+    { number: "1,247", label: "Cases Resolved" }
+  ];
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+      <Navbar/>
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-4 h-screen sm:px-6 lg:px-8 relative">
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center">
+            <div className="space-y-6">
+              <Badge className="bg-red-600 text-white border-red-600">
+                Blockchain-Powered Transparency
+              </Badge>
+              <h1 className="text-6xl md:text-7xl font-bold text-white leading-tight">
+                Combat Corruption
+                <span className="block text-red-600"> Through Technology </span>
+              </h1>
+              <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                VoiceChain is a decentralized platform that leverages blockchain technology to create
+                an immutable record of corruption reports while protecting whistleblower identities.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <Button size="lg" className="bg-red-600 hover:bg-red-700 text-white font-semibold px-10 py-4">
+                  Connect Wallet
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
+                {stats.map((stat, index) => (
+                  <div key={index} className="text-center">
+                    <div className="text-4xl font-bold text-red-600 mb-2">
+                      {stat.number}
+                    </div>
+                    <div className="text-gray-400 text-sm uppercase tracking-wide">
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      {/* Features Section */}
+      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 ">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 space-y-6">
+            <h2 className="text-5xl md:text-6xl font-bold text-white">
+              Platform Features
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Advanced blockchain technology ensures transparency, security, and immutability
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <Card key={index} className="bg-gray-900 border-gray-700 hover:bg-gray-700">
+                <CardHeader className="text-center space-y-4">
+                  <div className="mx-auto p-4 bg-gray-700 rounded-full w-fit">
+                    {feature.icon}
+                  </div>
+                  <CardTitle className="text-white text-xl font-semibold">{feature.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-gray-300 text-center leading-relaxed">
+                    {feature.description}
+                  </CardDescription>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
+      {/* How It Works */}
+      <section id="onboard" className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-bold text-white">
+              How It Works
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-12">
+            <div className="text-center space-y-6">
+              <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
+                1
+              </div>
+              <h3 className="text-2xl font-bold text-white">Document Evidence</h3>
+              <p className="text-gray-300 leading-relaxed">
+                Securely upload documents, photos, and testimonies with cryptographic verification to ensure authenticity.
+              </p>
+            </div>
+            <div className="text-center space-y-6">
+              <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
+                2
+              </div>
+              <h3 className="text-2xl font-bold text-white">Community Verification</h3>
+              <p className="text-gray-300 leading-relaxed">
+                Reports undergo decentralized verification through community consensus mechanisms and expert review.
+              </p>
+            </div>
+            <div className="text-center space-y-6">
+              <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
+                3
+              </div>
+              <h3 className="text-2xl font-bold text-white">Immutable Record</h3>
+              <p className="text-gray-300 leading-relaxed">
+                Verified reports are permanently stored on blockchain, creating an unchangeable record for accountability.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    
+      {/* Call to Action */}
+      <section id="join" className="py-20 px-4 sm:px-6 lg:px-8 bg-red-600">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <h2 className="text-5xl md:text-6xl font-bold text-white">
+            Join the Movement
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
+          <p className="text-xl text-red-100">
+            Help build a more transparent world through blockchain technology and community action.
           </p>
-        </a>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-md mx-auto">
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="bg-white text-black border-none placeholder-gray-500 focus:ring-2 focus:ring-white"
+            />
+            <Button className="bg-black hover:bg-gray-800 text-white px-8 py-3 font-semibold whitespace-nowrap">
+              Get Started
+            </Button>
+          </div>
+        </div>
+      </section>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+      {/* Footer */}
+      <footer className="bg-black border-t border-gray-800 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div className="space-y-4">
+              <div className="flex items-center">
+                <MessageCircle className="w-8 h-8 text-red-600 mr-2" />
+                <h3 className="text-2xl font-bold text-white">VoiceChain</h3>
+              </div>
+              <p className="text-gray-400 leading-relaxed">
+                Decentralized platform for transparent reporting and fighting corruption through blockchain technology.
+              </p>
+            </div>
+            <div className="space-y-4">
+              <h4 className="text-white font-semibold">Platform</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#" className="hover:text-white">Submit Report</a></li>
+                <li><a href="#" className="hover:text-white">Verify Reports</a></li>
+                <li><a href="#" className="hover:text-white">Browse Cases</a></li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <h4 className="text-white font-semibold">Resources</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#" className="hover:text-white">Documentation</a></li>
+                <li><a href="#" className="hover:text-white">API</a></li>
+                <li><a href="#" className="hover:text-white">Whitepaper</a></li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <h4 className="text-white font-semibold">Community</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#" className="hover:text-white">Discord</a></li>
+                <li><a href="#" className="hover:text-white">Telegram</a></li>
+                <li><a href="#" className="hover:text-white">Twitter</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2025 VoiceChain. Empowering transparency through blockchain technology.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
-}
+export default VoiceChainLanding;
