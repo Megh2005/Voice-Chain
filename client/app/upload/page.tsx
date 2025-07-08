@@ -100,10 +100,10 @@ const CreatePost = () => {
     try {
       const metadataURLPromise = uploadMetadataToIPFS();
       toast.promise(metadataURLPromise, {
-        loading: "Uploading metadata...",
-        success: "Metadata uploaded successfully!",
-        error: "Metadata upload failed",
-      });
+        loading: "📤 Uploading metadata to the cloud... Please wait!",
+        success: "✅ Metadata uploaded successfully! You're all set 🚀",
+        error: "❌ Oops! Metadata upload failed. Please try again 🔁",
+      });      
 
       const metadataURL = await metadataURLPromise;
       if (!metadataURL) return;
@@ -117,10 +117,10 @@ const CreatePost = () => {
 
       const transactionPromise = contract.createToken(metadataURL, price);
       toast.promise(transactionPromise, {
-        loading: "Creating Protest...",
-        success: "Protest created successfully!",
-        error: "Failed to create Protest",
-      });
+        loading: "✊ Creating your protest... Please hold on!",
+        success: "✅ Protest listed successfully! Your voice is now live 📢",
+        error: "❌ Failed to create protest. Please try again 🔁",
+      });      
 
       const transaction = await transactionPromise;
       await transaction.wait();
@@ -247,11 +247,12 @@ const CreatePost = () => {
                 <img
                   src={imagePreview}
                   alt="Preview"
-                  className="w-full h-32 sm:h-100 object-cover rounded-md"
+                  className="w-full max-h-[400px] sm:max-h-[500px] object-contain rounded-md transition-all duration-300"
                 />
               </div>
             )}
           </div>
+
 
           <div className="pt-4 border-t border-white/10">
             

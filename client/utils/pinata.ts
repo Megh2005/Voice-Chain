@@ -4,12 +4,13 @@
 import axios from "axios";
 const jwt = process.env.JWT;
 
-export const uploadJSONToIPFS = async (JSONBody: any) => {
+export const uploadJSONToIPFS = async (JSONBody: any, sharedId?: string) => {
   const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;
 
-  // Generate random number for the metadata name
-  const randomNumber = Math.floor(Math.random() * 1000000);
-  const metadataName = `core_metadata_${randomNumber}`;
+  // Use shared ID if provided, otherwise generate random number
+  const randomNumber =
+    sharedId || Math.floor(Math.random() * 1000000).toString();
+  const metadataName = `core_${randomNumber}.json`;
 
   // Create the request body with metadata
   const requestBody = {
@@ -30,6 +31,7 @@ export const uploadJSONToIPFS = async (JSONBody: any) => {
     return {
       success: true,
       pinataURL: "https://gateway.pinata.cloud/ipfs/" + res.data.IpfsHash,
+      sharedId: randomNumber,
     };
   } catch (error) {
     console.log(error);
@@ -40,9 +42,10 @@ export const uploadJSONToIPFS = async (JSONBody: any) => {
   }
 };
 
-export const uploadFileToIPFS = async (data: any) => {
-  // Generate random number for the filename
-  const randomNumber = Math.floor(Math.random() * 1000000);
+export const uploadFileToIPFS = async (data: any, sharedId?: string) => {
+  // Use shared ID if provided, otherwise generate random number
+  const randomNumber =
+    sharedId || Math.floor(Math.random() * 1000000).toString();
   const originalFile = data.get("file");
   const fileExtension = originalFile.name.split(".").pop();
   const newFileName = `core_${randomNumber}.${fileExtension}`;
@@ -73,6 +76,7 @@ export const uploadFileToIPFS = async (data: any) => {
     return {
       success: true,
       pinataURL: "https://gateway.pinata.cloud/ipfs/" + res.data.IpfsHash,
+      sharedId: randomNumber,
     };
   } catch (error) {
     console.log(error);
