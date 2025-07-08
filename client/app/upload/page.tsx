@@ -14,6 +14,8 @@ import { Label } from "@/components/ui/label";
 import { Loader2, ImageIcon, Sparkles, Upload, X } from "lucide-react";
 import WalletButton from "@/components/WalletButton";
 import Footer from "@/components/Footer";
+import { db } from "@/firebase/init";
+import { collection, addDoc, doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -91,6 +93,59 @@ const CreatePost = () => {
     }
   }
 
+  async function savePostToFirebase(postData: {
+    title: string;
+    content: string;
+    imageUrl: string;
+    metadataUrl: string;
+    transactionHash: string;
+  }) {
+    try {
+      if (!userAddress) {
+        throw new Error("No wallet address available");
+      }
+
+      const postDoc = {
+        ...postData,
+        createdAt: new Date().toISOString(),
+        timestamp: Date.now(),
+        status: "active"
+      };
+
+      // Create/update user document first
+      const userRef = doc(db, "users", userAddress);
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        // User exists, increment post count
+        await updateDoc(userRef, {
+          totalPosts: increment(1),
+          lastPostAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        });
+      } else {
+        // User doesn't exist, create new user document
+        await setDoc(userRef, {
+          walletAddress: userAddress,
+          totalPosts: 1,
+          createdAt: new Date().toISOString(),
+          lastPostAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        });
+      }
+
+      // Add the post to the user's posts subcollection
+      const userPostsRef = collection(db, "users", userAddress, "posts");
+      const docRef = await addDoc(userPostsRef, postDoc);
+
+      console.log("Post saved to Firebase with ID: ", docRef.id);
+      return docRef.id;
+    } catch (error) {
+      console.error("Error saving post to Firebase: ", error);
+      throw error;
+    }
+  }
+
   async function listNFT() {
     if (!isConnected) {
       toast.error("Please connect your wallet first");
@@ -104,7 +159,7 @@ const CreatePost = () => {
         loading: "📤 Uploading metadata to the cloud... Please wait!",
         success: "✅ Metadata uploaded successfully! You're all set 🚀",
         error: "❌ Oops! Metadata upload failed. Please try again 🔁",
-      });      
+      });
 
       const metadataURL = await metadataURLPromise;
       if (!metadataURL) return;
@@ -121,10 +176,37 @@ const CreatePost = () => {
         loading: "✊ Creating your protest... Please hold on!",
         success: "✅ Protest listed successfully! Your voice is now live 📢",
         error: "❌ Failed to create protest. Please try again 🔁",
-      });      
+      });
 
       const transaction = await transactionPromise;
       await transaction.wait();
+
+      // Save post to Firebase after successful blockchain transaction
+      try {
+        const imageUrl = await uploadImageToPinata();
+        if (imageUrl) {
+          const postData = {
+            title,
+            content,
+            imageUrl,
+            metadataUrl: metadataURL,
+            transactionHash: transaction.hash,
+            price: nftPrice
+          };
+
+          const savePromise = savePostToFirebase(postData);
+          toast.promise(savePromise, {
+            loading: "💾 Saving post to database...",
+            success: "✅ Post saved successfully!",
+            error: "❌ Failed to save post to database",
+          });
+
+          await savePromise;
+        }
+      } catch (firebaseError) {
+        console.error("Firebase save error:", firebaseError);
+        toast.error("Post created but failed to save to database");
+      }
 
       toast.success("🎉 Protest listed successfully!");
 
@@ -256,7 +338,7 @@ const CreatePost = () => {
 
 
           <div className="pt-4 border-t border-white/10">
-            
+
             <Button
               onClick={listNFT}
               disabled={loading || !title || !content || !image}
