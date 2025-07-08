@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Loader2, ImageIcon, Sparkles, Upload, X } from "lucide-react";
 import WalletButton from "@/components/WalletButton";
+import Footer from "@/components/Footer";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -169,7 +170,7 @@ const CreatePost = () => {
   }
 
   return (
-    <div className="w-full h-screen max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full h-screen py-[10vh] max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
       <Card className="w-full bg-black border-2 border-red-500 shadow-2xl shadow-red-500/20 sticky top-8">
         <CardHeader className="pb-4 px-4 sm:px-6">
           <CardTitle className="flex items-center justify-center gap-3 text-red-400 text-lg sm:text-xl font-semibold">

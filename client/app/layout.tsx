@@ -32,7 +32,6 @@ export default function RootLayout({
           <WalletContextProvider>
             <Navbar/>
             {children}
-            <Footer/>
             </WalletContextProvider>
           <Toaster position="top-center" />
         </ThemeProvider>
