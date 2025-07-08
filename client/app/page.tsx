@@ -7,9 +7,11 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { ArrowRight, Shield, Users, Zap, ChevronDown, Play, Check, MessageCircle, Vote, Eye, Lock, Globe, AlertTriangle } from 'lucide-react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import WalletConnectButton from '@/components/WalletConnectButton';
 
 const VoiceChainLanding = () => {
-  const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
 
   const features = [
     {
@@ -91,15 +93,11 @@ const VoiceChainLanding = () => {
                 <span className="block text-red-600"> Through Technology </span>
               </h1>
               <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                VoiceChain is a decentralized platform that leverages blockchain technology to create
+                Voice Chain is a decentralized platform that leverages blockchain technology to create
                 an immutable record of corruption reports while protecting whistleblower identities.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Button size="lg" className="bg-red-600 hover:bg-red-700 text-white font-semibold px-10 py-4">
-                  Connect Wallet
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              
+                <WalletConnectButton />
               </div>
 
               {/* Stats */}
@@ -193,7 +191,7 @@ const VoiceChainLanding = () => {
 
     
       {/* Call to Action */}
-      <section id="join" className="py-20 px-4 sm:px-6 lg:px-8 bg-red-600">
+      <section id="join" className="py-20 px-4 sm:px-6 lg:px-8 bg-red-800">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <h2 className="text-5xl md:text-6xl font-bold text-white">
             Join the Movement
@@ -203,62 +201,21 @@ const VoiceChainLanding = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-md mx-auto">
             <Input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              placeholder="Enter your wallet address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
               className="bg-white text-black border-none placeholder-gray-500 focus:ring-2 focus:ring-white"
             />
             <Button className="bg-black hover:bg-gray-800 text-white px-8 py-3 font-semibold whitespace-nowrap">
-              Get Started
+              Subscribe
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-black border-t border-gray-800 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <MessageCircle className="w-8 h-8 text-red-600 mr-2" />
-                <h3 className="text-2xl font-bold text-white">VoiceChain</h3>
-              </div>
-              <p className="text-gray-400 leading-relaxed">
-                Decentralized platform for transparent reporting and fighting corruption through blockchain technology.
-              </p>
-            </div>
-            <div className="space-y-4">
-              <h4 className="text-white font-semibold">Platform</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Submit Report</a></li>
-                <li><a href="#" className="hover:text-white">Verify Reports</a></li>
-                <li><a href="#" className="hover:text-white">Browse Cases</a></li>
-              </ul>
-            </div>
-            <div className="space-y-4">
-              <h4 className="text-white font-semibold">Resources</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Documentation</a></li>
-                <li><a href="#" className="hover:text-white">API</a></li>
-                <li><a href="#" className="hover:text-white">Whitepaper</a></li>
-              </ul>
-            </div>
-            <div className="space-y-4">
-              <h4 className="text-white font-semibold">Community</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Discord</a></li>
-                <li><a href="#" className="hover:text-white">Telegram</a></li>
-                <li><a href="#" className="hover:text-white">Twitter</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 VoiceChain. Empowering transparency through blockchain technology.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer/>
+
     </div>
   );
 };
