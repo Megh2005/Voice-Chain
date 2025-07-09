@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "AI agent based lawyer finder",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Megh2005/Voice-Chain.git"
+  },
+  "keywords": [
+    "Agent",
+    "Core",
+    "Voice"
+  ],
+  "author": "Megh Deb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Megh2005/Voice-Chain/issues"
+  },
+  "homepage": "https://github.com/Megh2005/Voice-Chain#readme",
+  "dependencies": {
+    "dotenv": "^17.1.0"
+  }
+}
