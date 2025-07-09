@@ -23,6 +23,7 @@ import { db } from "@/firebase/init";
 import { collection, getDocs, doc, getDoc, query, orderBy } from "firebase/firestore";
 import { toast } from "sonner";
 import WalletButton from "@/components/WalletButton";
+import Link from "next/link";
 
 interface Post {
     id: string;
@@ -103,7 +104,7 @@ const ProfilePage = () => {
     };
 
     const formatAddress = (address: string) => {
-        return `${address.slice(0, 6)}...${address.slice(-4)}`;
+        return `${address}`;
     };
 
     const copyToClipboard = (text: string, type: 'address' | 'hash') => {
@@ -252,9 +253,11 @@ const ProfilePage = () => {
                                 </div>
                                 <h3 className="text-white text-lg font-semibold mb-2">No Protests Yet</h3>
                                 <p className="text-gray-400 mb-4">Start creating your first protest to see it here!</p>
-                                <Button className="bg-red-500 hover:bg-red-600 text-white">
-                                    Create Protest
-                                </Button>
+                                <Link href="/upload">
+                                    <Button className="bg-red-500 hover:bg-red-600 text-white">
+                                        Create Protest
+                                    </Button>
+                                </Link>
                             </div>
                         ) : (
                             <div className="space-y-4">
@@ -282,7 +285,7 @@ const ProfilePage = () => {
                                                     </div>
 
                                                     <div className="flex flex-wrap gap-2">
-                                                        
+
                                                         <Badge variant="outline" className="border-green-500 text-green-500">
                                                             {post.status}
                                                         </Badge>

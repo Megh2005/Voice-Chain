@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { MessageCircle, Menu, X, User } from 'lucide-react'
 import { FaPen, FaRegNewspaper, FaHome } from 'react-icons/fa'
-import WalletButton from './WalletButton'
 
 const navItems = [
   { label: 'Home', icon: <FaHome />, href: '/' },
@@ -37,7 +36,7 @@ const Navbar: React.FC = () => {
                 <span>{item.label}</span>
               </Link>
             ))}
-            <WalletButton />
+            {/* <WalletButton /> */}
           </div>
 
           {/* Mobile Hamburger */}
@@ -68,9 +67,9 @@ const Navbar: React.FC = () => {
                 <span>{item.label}</span>
               </Link>
             ))}
-            <div className="w-full flex justify-center">
+            {/* <div className="w-full flex justify-center">
               <WalletButton />
-            </div>
+            </div> */}
           </div>
         </div>
       )}
