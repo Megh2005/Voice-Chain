@@ -3,30 +3,27 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "next/navigation";
 import { WalletContext } from "@/context/Wallet";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { 
+import {
   ArrowLeft,
-  Calendar, 
-  Hash, 
-  ImageIcon, 
-  ExternalLink,
-  Clock,
+  Calendar,
   Sparkles,
   MessageSquare,
-  DollarSign,
-  User,
   Copy,
   CheckCircle,
   Share2,
-  Heart,
-  Eye,
-  ShoppingCart
+  User
 } from "lucide-react";
 import { db } from "@/firebase/init";
-import { collection, getDocs, doc, getDoc, query, where } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { toast } from "sonner";
 import { ethers } from "ethers";
 import marketplace from "@/app/marketplace.json";
@@ -45,16 +42,10 @@ interface Post {
   authorAddress?: string;
 }
 
-interface PostDetailPageProps {
-  params: {
-    id: string;
-  };
-}
-
 const PostDetailPage = () => {
   const params = useParams();
   const postId = params?.id as string;
-  
+
   const { userAddress, signer, isConnected } = useContext(WalletContext);
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
@@ -72,17 +63,16 @@ const PostDetailPage = () => {
 
     setLoading(true);
     try {
-      // Search through all users' posts to find the one with the matching ID
       const usersRef = collection(db, "users");
       const usersSnapshot = await getDocs(usersRef);
-      
+
       let foundPost: Post | null = null;
       let authorAddress: string | null = null;
 
       for (const userDoc of usersSnapshot.docs) {
         const postsRef = collection(db, "users", userDoc.id, "posts");
         const postsSnapshot = await getDocs(postsRef);
-        
+
         for (const postDoc of postsSnapshot.docs) {
           if (postDoc.id === postId) {
             foundPost = {
@@ -93,7 +83,7 @@ const PostDetailPage = () => {
             break;
           }
         }
-        
+
         if (foundPost) break;
       }
 
@@ -102,7 +92,6 @@ const PostDetailPage = () => {
       } else {
         toast.error("Post not found");
       }
-      
     } catch (error) {
       console.error("Error fetching post:", error);
       toast.error("Failed to fetch post");
@@ -112,12 +101,12 @@ const PostDetailPage = () => {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
     });
   };
 
@@ -136,11 +125,7 @@ const PostDetailPage = () => {
 
   const sharePost = () => {
     const url = window.location.href;
-    copyToClipboard(url, 'link');
-  };
-
-  const openEtherscan = (hash: string) => {
-    window.open(`https://etherscan.io/tx/${hash}`, '_blank');
+    copyToClipboard(url, "link");
   };
 
   const goBack = () => {
@@ -167,7 +152,7 @@ const PostDetailPage = () => {
       );
 
       const price = ethers.parseEther(post.price);
-      
+
       const purchasePromise = contract.purchaseToken(post.id, {
         value: price
       });
@@ -175,14 +160,13 @@ const PostDetailPage = () => {
       toast.promise(purchasePromise, {
         loading: "🛒 Purchasing NFT... Please confirm the transaction",
         success: "✅ NFT purchased successfully! 🎉",
-        error: "❌ Failed to purchase NFT. Please try again",
+        error: "❌ Failed to purchase NFT. Please try again"
       });
 
       const transaction = await purchasePromise;
       await transaction.wait();
 
       toast.success("🎉 Congratulations! You now own this NFT!");
-      
     } catch (error) {
       console.error("Error purchasing NFT:", error);
       toast.error("Failed to purchase NFT");
@@ -229,11 +213,11 @@ const PostDetailPage = () => {
   }
 
   return (
-<div className="w-full min-h-screen pt-24 pb-8 px-4 sm:px-6 lg:px-8 bg-black">
-<div className="max-w-4xl mx-auto space-y-6">
-        
+    <div className="w-full min-h-screen pt-24 pb-8 px-4 sm:px-6 lg:px-8 bg-black">
+      <div className="max-w-6xl mx-auto space-y-6">
+
         {/* Back Button */}
-        <Button 
+        <Button
           onClick={goBack}
           variant="outline"
           className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
@@ -252,7 +236,6 @@ const PostDetailPage = () => {
                 </div>
                 <span>Protest Details</span>
               </CardTitle>
-              
               <div className="flex items-center gap-2">
                 <Button
                   onClick={sharePost}
@@ -267,54 +250,46 @@ const PostDetailPage = () => {
           </CardHeader>
         </Card>
 
-        {/* Main Content */}
+        {/* Grid with 3 Equal Cards */}
         <div className="grid grid-cols-1 gap-6">
-          
-          {/* Post Image */}
-          <div className="lg:col-span-2">
-            <Card className="bg-black border-2 border-red-500 shadow-2xl shadow-red-500/20">
-              <CardContent className="p-0">
-                <div className="aspect-square w-full bg-white/5 rounded-lg overflow-hidden">
-                  <img 
-                    src={post.imageUrl} 
-                    alt={post.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          {/* Image */}
+          <Card className="bg-black border-2 border-red-500 shadow-2xl shadow-red-500/20 h-full">
+            <CardContent className="p-0 h-full flex flex-col">
+              <div className="w-full h-full bg-white/5 rounded-lg overflow-hidden h-64">
+                <img
+                  src={post.imageUrl}
+                  alt={post.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </CardContent>
+          </Card>
 
-          {/* Post Details */}
-          <div className="space-y-6">
-            
-            {/* Title and Content */}
-            <Card className="bg-black border-2 border-red-500 shadow-2xl shadow-red-500/20">
-              <CardContent className="p-6 space-y-4">
-                <div>
-                  <h1 className="text-white font-bold text-2xl mb-3">{post.title}</h1>
-                  <p className="text-gray-300 text-base leading-relaxed">{post.content}</p>
-                </div>
-                
-                <Separator className="bg-white/10" />
-                
-                {/* Price and Status */}
-                <div className="flex items-center justify-between">
-                  <Badge variant="outline" className="border-green-500 text-green-500">
-                    {post.status}
-                  </Badge>
-                </div>                
-              </CardContent>
-            </Card>
+          {/* Title, Content, Status */}
+          <Card className="bg-black border-2 border-red-500 shadow-2xl shadow-red-500/20 h-full flex flex-col">
+            <CardContent className="p-6 space-y-4 flex-grow flex flex-col justify-between">
+              <div>
+                <h1 className="text-white font-bold text-2xl mb-3">{post.title}</h1>
+                <p className="text-gray-300 text-base leading-relaxed">{post.content}</p>
+              </div>
+              <div className="pt-4">
+                <Separator className="bg-white/10 mb-4" />
+                <Badge variant="outline" className="border-green-500 text-green-500">
+                  {post.status}
+                </Badge>
+              </div>
+            </CardContent>
+          </Card>
 
-            {/* Author Info */}
-            <Card className="bg-black border-2 border-red-500 shadow-2xl shadow-red-500/20">
-              <CardContent className="p-6 space-y-4">
-                <h3 className="text-white font-semibold text-lg flex items-center gap-2">
+          {/* Author Info + Created At */}
+          <Card className="bg-black border-2 border-red-500 shadow-2xl shadow-red-500/20 h-full flex flex-col">
+            <CardContent className="p-6 space-y-4 flex-grow flex flex-col justify-between">
+
+              <div>
+                <h3 className="text-white font-semibold text-lg flex items-center gap-2 mb-3">
                   <User className="w-5 h-5 text-red-500" />
                   Creator
                 </h3>
-                
                 <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center">
@@ -322,13 +297,13 @@ const PostDetailPage = () => {
                     </div>
                     <div>
                       <p className="text-white font-mono text-sm">
-                        {formatAddress(post.authorAddress || '')}
+                        {formatAddress(post.authorAddress || "")}
                       </p>
                       <p className="text-gray-400 text-xs">Creator</p>
                     </div>
                   </div>
                   <Button
-                    onClick={() => copyToClipboard(post.authorAddress || '', 'address')}
+                    onClick={() => copyToClipboard(post.authorAddress || "", "address")}
                     variant="ghost"
                     size="sm"
                     className="text-gray-400 hover:text-white"
@@ -340,27 +315,24 @@ const PostDetailPage = () => {
                     )}
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
 
-            {/* Details */}
-            <Card className="bg-black border-2 border-red-500 shadow-2xl shadow-red-500/20">
-              <CardContent className="p-6 space-y-4">
-                <h3 className="text-white font-semibold text-lg">Details</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-gray-400" />
-                      <span className="text-gray-400 text-sm">Created</span>
-                    </div>
-                    <span className="text-white text-sm">{formatDate(post.createdAt)}</span>
+              <div>
+                <Separator className="bg-white/10 mb-4" />
+                <h3 className="text-white font-semibold text-lg mb-2">Details</h3>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-gray-400" />
+                    <span className="text-gray-400 text-sm">Created</span>
                   </div>
+                  <span className="text-white text-sm">{formatDate(post.createdAt)}</span>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+              </div>
+
+            </CardContent>
+          </Card>
         </div>
+
       </div>
     </div>
   );
