@@ -8,47 +8,56 @@ import Link from "next/link";
 import { connectWallet } from "@/utils/connectWallet";
 
 declare global {
-    interface Window {
-        ethereum?: any;
-    }
+  interface Window {
+    ethereum?: any;
+  }
 }
 
 const WalletConnectButton = () => {
-    const {
-        setIsConnected,
-        setUserAddress,
-        setSigner,
-        isConnected,
-        userAddress,
-    } = useContext(WalletContext);
+  const {
+    setIsConnected,
+    setUserAddress,
+    setSigner,
+    setSignature,
+    isConnected,
+    userAddress,
+  } = useContext(WalletContext);
 
-    return (
-        <div className="flex gap-6">
-            <Button
-                size="lg"
-                className="bg-red-600 hover:bg-red-700 text-white font-semibold px-10 py-4"
-                disabled={isConnected}
-                onClick={async () => {
-                    await connectWallet(setIsConnected, setUserAddress, setSigner);
-                }}
-            >
-                {userAddress
-                    ? `${userAddress.slice(0, 12)}...${userAddress.slice(-13)}`
-                    : "Connect Wallet"}
-            </Button>
-            {isConnected && userAddress && (
-                <Link href={"/upload"}>
-                    <Button
-                        size="lg"
-                        className="bg-red-600 hover:bg-red-700 text-white font-semibold px-10 py-4 w-full"
-                    >
-                        Start Protest
-                        <ArrowRight className="ml-2 w-5 h-5" />
-                    </Button>
-                </Link>
-            )}
-        </div>
+  const handleConnect = async () => {
+    await connectWallet(
+      setIsConnected,
+      setUserAddress,
+      setSigner,
+      setSignature // ✅ Pass setSignature for message signing
     );
+  };
+
+  return (
+    <div className="flex gap-6">
+      <Button
+        size="lg"
+        className="bg-red-600 hover:bg-red-700 text-white font-semibold px-10 py-4"
+        disabled={isConnected}
+        onClick={handleConnect}
+      >
+        {userAddress
+          ? `${userAddress.slice(0, 12)}...${userAddress.slice(-13)}`
+          : "Connect Wallet"}
+      </Button>
+
+      {isConnected && userAddress && (
+        <Link href="/upload">
+          <Button
+            size="lg"
+            className="bg-red-600 hover:bg-red-700 text-white font-semibold px-10 py-4 w-full"
+          >
+            Start Protest
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </Button>
+        </Link>
+      )}
+    </div>
+  );
 };
 
 export default WalletConnectButton;

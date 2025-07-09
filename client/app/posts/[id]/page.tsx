@@ -111,7 +111,7 @@ const PostDetailPage = () => {
   };
 
   const formatAddress = (address: string) => {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+    return `${address}`;
   };
 
   const copyToClipboard = (text: string, type: string) => {
@@ -255,7 +255,7 @@ const PostDetailPage = () => {
           {/* Image */}
           <Card className="bg-black border-2 border-red-500 shadow-2xl shadow-red-500/20 h-full">
             <CardContent className="p-0 h-full flex flex-col">
-              <div className="w-full h-full bg-white/5 rounded-lg overflow-hidden h-64">
+              <div className="w-full h-full bg-white/5 rounded-lg overflow-hidden">
                 <img
                   src={post.imageUrl}
                   alt={post.title}
