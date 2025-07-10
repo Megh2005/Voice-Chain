@@ -3,12 +3,13 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { MessageCircle, Menu, X, User } from 'lucide-react'
-import { FaPen, FaRegNewspaper, FaHome } from 'react-icons/fa'
+import { FaPen, FaRegNewspaper, FaHome, FaGraduationCap } from 'react-icons/fa'
 
 const navItems = [
   { label: 'Home', icon: <FaHome />, href: '/' },
   { label: 'Write Post', icon: <FaPen />, href: '/upload' },
   { label: 'Posts', icon: <FaRegNewspaper />, href: '/posts' },
+  { label: 'Help', icon: <FaGraduationCap />, href: '/advocate-search' },
   { label: 'Profile', icon: <User />, href: '/profile' }
 ]
 
