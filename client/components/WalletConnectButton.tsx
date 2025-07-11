@@ -18,7 +18,6 @@ const WalletConnectButton = () => {
     setIsConnected,
     setUserAddress,
     setSigner,
-    setSignature,
     isConnected,
     userAddress,
   } = useContext(WalletContext);
@@ -28,7 +27,6 @@ const WalletConnectButton = () => {
       setIsConnected,
       setUserAddress,
       setSigner,
-      setSignature // ✅ Pass setSignature for message signing
     );
   };
 
