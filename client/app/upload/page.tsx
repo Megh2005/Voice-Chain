@@ -99,6 +99,7 @@ const CreatePost = () => {
     imageUrl: string;
     metadataUrl: string;
     transactionHash: string;
+    price: string;
   }) {
     try {
       if (!userAddress) {
@@ -107,6 +108,7 @@ const CreatePost = () => {
 
       const postDoc = {
         ...postData,
+        walletAddress: userAddress,
         createdAt: new Date().toISOString(),
         timestamp: Date.now(),
         status: "active"
@@ -114,24 +116,30 @@ const CreatePost = () => {
 
       // Create/update user document first
       const userRef = doc(db, "users", userAddress);
-      const userDoc = await getDoc(userRef);
 
-      if (userDoc.exists()) {
-        // User exists, increment post count
-        await updateDoc(userRef, {
-          totalPosts: increment(1),
-          lastPostAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        });
-      } else {
-        // User doesn't exist, create new user document
-        await setDoc(userRef, {
-          walletAddress: userAddress,
-          totalPosts: 1,
-          createdAt: new Date().toISOString(),
-          lastPostAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        });
+      try {
+        const userDoc = await getDoc(userRef);
+
+        if (userDoc.exists()) {
+          // User exists, increment post count
+          await updateDoc(userRef, {
+            totalPosts: increment(1),
+            lastPostAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          });
+        } else {
+          // User doesn't exist, create new user document
+          await setDoc(userRef, {
+            walletAddress: userAddress,
+            totalPosts: 1,
+            createdAt: new Date().toISOString(),
+            lastPostAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          });
+        }
+      } catch (userError) {
+        console.error("Error updating user document:", userError);
+        // Continue with post creation even if user update fails
       }
 
       // Add the post to the user's posts subcollection
@@ -194,18 +202,12 @@ const CreatePost = () => {
             price: nftPrice
           };
 
-          const savePromise = savePostToFirebase(postData);
-          toast.promise(savePromise, {
-            loading: "💾 Saving post to database...",
-            success: "✅ Post saved successfully!",
-            error: "❌ Failed to save post to database",
-          });
-
-          await savePromise;
+          await savePostToFirebase(postData);
+          console.log("Post successfully saved to Firebase");
         }
       } catch (firebaseError) {
         console.error("Firebase save error:", firebaseError);
-        toast.error("Post created but failed to save to database");
+        // Don't show toast error for Firebase issues
       }
 
       toast.success("🎉 Protest listed successfully!");
