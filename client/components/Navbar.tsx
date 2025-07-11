@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { MessageCircle, Menu, X, User } from 'lucide-react'
+import { Menu, X, User } from 'lucide-react'
 import { FaPen, FaRegNewspaper, FaHome, FaGraduationCap } from 'react-icons/fa'
 
 const navItems = [
@@ -25,7 +25,11 @@ const Navbar: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo and Title */}
           <div className="flex items-center">
-            <MessageCircle className="w-8 h-8 text-red-600 mr-3" />
+            <img
+              src="https://res.cloudinary.com/djyk287ep/image/upload/v1752266605/logoipsum-359_st42rg.png"
+              alt="Voice Chain Logo"
+              className="w-8 h-8 mr-3"
+            />
             <span className="text-2xl font-bold text-white">Voice Chain</span>
           </div>
 
@@ -68,9 +72,6 @@ const Navbar: React.FC = () => {
                 <span>{item.label}</span>
               </Link>
             ))}
-            {/* <div className="w-full flex justify-center">
-              <WalletButton />
-            </div> */}
           </div>
         </div>
       )}
