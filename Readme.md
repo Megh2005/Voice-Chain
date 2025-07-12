@@ -138,4 +138,6 @@ When potential bad actors know their actions might be permanently recorded and i
 - [ ] **Security Auditing**: Professional smart contract review
 - [ ] **Mainnet Migration**: Production deployment planning
 
+---
+
 > **When truth lives on the blockchain, silence becomes impossible. Voice Chain isn't just a platform—it's a movement where cryptography meets courage, and corruption meets its match.**
